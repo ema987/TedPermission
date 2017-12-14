@@ -16,6 +16,8 @@ import io.reactivex.annotations.NonNull;
 
 public class TedRx2Permission extends TedPermissionBase {
 
+    private static boolean requestInProgress = false;
+
     public static Builder with(Context context) {
         return new Builder(context);
     }
@@ -27,33 +29,46 @@ public class TedRx2Permission extends TedPermissionBase {
         }
 
         public Observable<TedPermissionResult> request() {
-            return Observable.create(new ObservableOnSubscribe<TedPermissionResult>() {
-                @Override
-                public void subscribe(@NonNull final ObservableEmitter<TedPermissionResult> emitter) throws Exception {
+            if(!requestInProgress) {
+                requestInProgress = true;
+                return Observable.create(new ObservableOnSubscribe<TedPermissionResult>() {
+                    @Override
+                    public void subscribe(@NonNull final ObservableEmitter<TedPermissionResult> emitter) throws Exception {
 
-                    PermissionListener listener = new PermissionListener() {
-                        @Override
-                        public void onPermissionGranted() {
-                            emitter.onNext(new TedPermissionResult(null));
-                            emitter.onComplete();
+                        PermissionListener listener = new PermissionListener() {
+                            @Override
+                            public void onPermissionGranted() {
+                                emitter.onNext(new TedPermissionResult(null));
+                                emitter.onComplete();
+                                requestInProgress = false;
+                            }
+
+                            @Override
+                            public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+                                emitter.onNext(new TedPermissionResult(deniedPermissions));
+                                emitter.onComplete();
+                                requestInProgress = false;
+                            }
+                        };
+
+
+                        try {
+                            setPermissionListener(listener);
+                            checkPermissions();
+                        } catch (Exception exception) {
+                            emitter.onError(exception);
                         }
 
-                        @Override
-                        public void onPermissionDenied(ArrayList<String> deniedPermissions) {
-                            emitter.onNext(new TedPermissionResult(deniedPermissions));
-                            emitter.onComplete();
-                        }
-                    };
-
-                    try {
-                        setPermissionListener(listener);
-                        checkPermissions();
-                    } catch (Exception exception) {
-                        emitter.onError(exception);
                     }
-
-                }
-            });
+                });
+            } else {
+                return Observable.create(new ObservableOnSubscribe<TedPermissionResult>() {
+                    @Override
+                    public void subscribe(ObservableEmitter<TedPermissionResult> e) throws Exception {
+                        e.onComplete();
+                    }
+                });
+            }
         }
     }
 
