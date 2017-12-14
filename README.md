@@ -20,6 +20,9 @@ TedPermission makes it easy to check and request android permissions.
 
 ## Demo
 
+[![Screenshot](https://github.com/ParkSangGwon/TedPermission/blob/master/google_play_150.png?raw=true)](https://play.google.com/store/apps/details?id=com.gun0912.tedpermissiondemo)
+
+<br/><br/>
 
 ![Screenshot](https://github.com/ParkSangGwon/TedPermission/blob/master/Screenshot.png?raw=true)    
            
@@ -27,11 +30,6 @@ TedPermission makes it easy to check and request android permissions.
 1. Request Permissions.
 2. If user denied permissions, we will show message dialog with Setting button.
 
-
-
-[![Screenshot](https://github.com/ParkSangGwon/TedPermission/blob/master/google_play_150.png?raw=true)](https://play.google.com/store/apps/details?id=com.gun0912.tedpermissiondemo)
-
-<br/><br/>
 
 ## Setup
 
@@ -43,21 +41,21 @@ Edit `root/app/build.gradle` like below.
 #### Normal
 ```gradle
 dependencies {
-    compile 'gun0912.ted:tedpermission:2.0.3'
+    compile 'gun0912.ted:tedpermission:2.1.0'
 }
 ```
 
 #### RxJava1
 ```gradle
 dependencies {
-    compile 'gun0912.ted:tedpermission-rx1:2.0.3'
+    compile 'gun0912.ted:tedpermission-rx1:2.1.0'
 }
 ```
 
 #### RxJava2
 ```gradle
 dependencies {
-    compile 'gun0912.ted:tedpermission-rx2:2.0.3'
+    compile 'gun0912.ted:tedpermission-rx2:2.1.0'
 }
 ```
 
