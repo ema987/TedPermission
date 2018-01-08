@@ -31,3 +31,12 @@ dependencies {
 }
 
 apply from: rootProject.file('publish.gradle')
+
+task customSourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+artifacts {
+    archives customSourcesJar
+}
