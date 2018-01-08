@@ -1,4 +1,7 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+
+group='com.github.ema987'
 
 android {
     compileSdkVersion versions.compileSdkVersion
@@ -28,12 +31,3 @@ dependencies {
 }
 
 apply from: rootProject.file('publish.gradle')
-
-task customSourcesJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    classifier = 'sources'
-}
-
-artifacts {
-    archives customSourcesJar
-}
