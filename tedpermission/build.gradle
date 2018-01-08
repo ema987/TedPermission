@@ -28,3 +28,7 @@ dependencies {
 }
 
 apply from: rootProject.file('publish.gradle')
+
+artifacts {
+    archives sourcesJar
+}
